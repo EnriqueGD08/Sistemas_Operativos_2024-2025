@@ -17,7 +17,7 @@ SRC_DIR = src
 BUILD_DIR = build
 
 # Bandera del compilador
-CXXFLAGS = -w -o -c -Wall -g -Wextra -pedantic -std=c++2b
+CXXFLAGS = -w -o -c -Wall -g -Wextra -pedantic -std=c++23
 
 # Archivo ejecutable
 TARGET = $(BUILD_DIR)/docserver

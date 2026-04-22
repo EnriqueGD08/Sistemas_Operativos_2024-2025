@@ -228,9 +228,9 @@ fi
 
 # Se ordena la tabla según el nombre de usuario.
 if $REVERTIR; then
-	TABLA="$(echo "$TABLA" | tr -s ' ' | sort -k 4 -r -f)"
+	TABLA="$(echo "$TABLA" | sort -k 4 -r -f)"
 else 
-	TABLA="$(echo "$TABLA" | tr -s ' ' | sort -k 4 -f)"
+	TABLA="$(echo "$TABLA" | sort -k 4 -f)"
 fi
 
 #if $ORDENAMIENTO_PROCESOS; then
@@ -247,41 +247,24 @@ fi
 
 # Se ordena la tabla según el parámetro de ordenamiento seleccionado.
 if $ORDENAMIENTO_PROCESOS; then
-	if $PROCESOS; then
-		if $REVERTIR; then
-			TABLA="$(echo "$TABLA" | tr -s ' ' | LC_ALL=C sort -t ' ' -g -k 6 -r)"
-		else
-			TABLA="$(echo "$TABLA" | tr -s ' ' | LC_ALL=C sort -t ' ' -g -k 6)"
-		fi
+	if $REVERTIR; then
+		TABLA="$(echo "$TABLA" | sort -k 6 -r)"
 	else
-		if $REVERTIR; then
-			TABLA="$(echo "$TABLA" | tr -s ' ' | LC_ALL=C sort -t ' ' -g -k 3 -r)"
-		else
-			TABLA="$(echo "$TABLA" | tr -s ' ' | LC_ALL=C sort -t ' ' -g -k 3)"
-		fi
-	
+		TABLA="$(echo "$TABLA" | sort -k 6)"
 	fi
 elif $ORDENAMIENTO_SESIONES; then	
 	if $REVERTIR; then
-		TABLA="$(echo "$TABLA" | tr -s ' ' | sort -k 2 -r)"
+		TABLA="$(echo "$TABLA" | sort -k 2 -r)"
 	else
-		TABLA="$(echo "$TABLA" | tr -s ' ' | sort -k 2)"
+		TABLA="$(echo "$TABLA" | sort -k 2)"
 	fi
 fi
 
 # Se imprime la tabla con los datos de los procesos.
 if $PROCESOS; then
 	printf "\n%-20s %-20s %-20s %-20s %-20s %-20s %-20s" "SESION" "PGID" "PID" "USUARIO" "TTY" "%MEMORIA" "CMD"
-	echo "$TABLA" | awk ' {
-		printf "\n%-20s %-20s %-20s %-20s %-20s %-20s %-20s", $1, $2, $3, $4, $5, $6, $7
-	}
-	'
+	echo "$TABLA"
 else
 	printf "\n%-20s %-20s %-20s %-20s %-20s %-20s %-20s" "SESION" "PROCESOS" "MEMORIA" "LIDER" "USUARIO" "TTY" "CMD"
-	echo "$TABLA" | awk ' {
-		printf "\n%-20s %-20s %-20s %-20s %-20s %-20s %-20s", $1, $2, $3, $4, $5, $6, $7
-	}
-	'
+	echo "$TABLA"
 fi
-
-echo ' '
